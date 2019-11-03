@@ -55,6 +55,22 @@ public class RegionOfInterestTool extends AbstractDataPanelTool {
         return (roiStart == null ? 0 : roiStart.intValue());
     }
 
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent) {
+        ReferenceFrame referenceFrame = this.getReferenceFame();
+        Object chromosome = referenceFrame.getChromosome();
+        String chromosomeName = referenceFrame.getChrName();
+        if (chromosome != null) {
+            if((mouseEvent.getModifiers() & MouseEvent.CTRL_MASK) != 0){
+                int x = mouseEvent.getX();
+                if(roiStart != null){
+                    roiStart = (int) referenceFrame.getChromosomePosition(x);
+                    getOwner().paintImmediately(getOwner().getBounds());
+                }
+            }
+        }
+    }
+    
     /**
      * The mouse has been clicked.  Define one edge of the region of interest.
      */
